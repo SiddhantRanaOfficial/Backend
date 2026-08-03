@@ -29,5 +29,23 @@ import userRouter from './routes/user.routes.js'
 
 app.use("/api/v1/users", userRouter)
 
+app.get("/", (req, res) => {
+  res.send("Hello G")
+}
+)
+
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500
+  const message = err.message || "Internal server error"
+
+  return res.status(statusCode).json({
+    statusCode,
+    data: err.data ?? null,
+    success: false,
+    errors: err.errors || [],
+    message
+  })
+})
+
 
 export { app }
