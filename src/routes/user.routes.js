@@ -31,9 +31,9 @@ router.route("/current-user").get(
   getCurrentUser
 );
 
-router.route("/change-password").post(
-  verifyJWT,
-  changeCurrentPassword
-);
+// router.route("/change-password").post(
+//   verifyJWT,
+//   changeCurrentPassword
+// );
 
 export default router

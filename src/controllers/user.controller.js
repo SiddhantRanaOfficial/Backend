@@ -184,4 +184,4 @@ const getCurrentUser = asyncHandler(async (req, res) => {
 });
 
 
-export { loginUser, registerUser } 
+export { logoutUser, getCurrentUser, loginUser, registerUser } 
