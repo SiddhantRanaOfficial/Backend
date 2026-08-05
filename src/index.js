@@ -8,33 +8,33 @@ dotenv.config({
   path: './.env'
 })
 
-const startServer = async () => {
-  try {
-    await connectDB();
-    console.log("Mongo DB connected")
+// const startServer = async () => {
+//   try {
+//     await connectDB();
+//     console.log("Mongo DB connected")
 
-    await redisClient.connect()
-    console.log("Redis Connected")
+//     await redisClient.connect()
+//     console.log("Redis Connected")
 
-    app.listen(process.env.PORT || 8000, () => {
-      console.log("Server is running ")
-    })
-  }
-  catch (error) {
-    console.log(error)
-  }
-}
-startServer();
-
-// connectDB()
-//   .then(() => {
 //     app.listen(process.env.PORT || 8000, () => {
-//       console.log(`Server is running at port : ${process.env.PORT}`);
+//       console.log("Server is running ")
 //     })
-//   })
-//   .catch((err) => {
-//     console.log("MongoDB connection failed! ", err);
-//   })
+//   }
+//   catch (error) {
+//     console.log(error)
+//   }
+// }
+// startServer();
+
+connectDB()
+  .then(() => {
+    app.listen(process.env.PORT || 8000, () => {
+      console.log(`Server is running at port : ${process.env.PORT}`);
+    })
+  })
+  .catch((err) => {
+    console.log("MongoDB connection failed! ", err);
+  })
 
 
 /* 
