@@ -2,20 +2,39 @@
 import dotenv from "dotenv"
 import connectDB from "./db/index.js"
 import { app } from "./app.js"
+import redisClient from "./db/redis.js"
 
 dotenv.config({
   path: './.env'
 })
 
-connectDB()
-  .then(() => {
+const startServer = async () => {
+  try {
+    await connectDB();
+    console.log("Mongo DB connected")
+
+    await redisClient.connect()
+    console.log("Redis Connected")
+
     app.listen(process.env.PORT || 8000, () => {
-      console.log(`Server is running at port : ${process.env.PORT}`);
+      console.log("Server is running ")
     })
-  })
-  .catch((err) => {
-    console.log("MongoDB connection failed! ", err);
-  })
+  }
+  catch (error) {
+    console.log(error)
+  }
+}
+startServer();
+
+// connectDB()
+//   .then(() => {
+//     app.listen(process.env.PORT || 8000, () => {
+//       console.log(`Server is running at port : ${process.env.PORT}`);
+//     })
+//   })
+//   .catch((err) => {
+//     console.log("MongoDB connection failed! ", err);
+//   })
 
 
 /* 
