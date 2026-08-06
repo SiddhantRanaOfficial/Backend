@@ -255,5 +255,18 @@ const updateProfile = asyncHandler(async (req, res) => {
   );
 });
 
+const deleteAccount = asyncHandler(async (req, res) => {
 
-export { updateProfile, changeCurrentPassword, logoutUser, getCurrentUser, loginUser, registerUser } 
+  await User.findByIdAndDelete(req.user._id);
+
+  res.status(200).json(
+    new ApiResponse(
+      200,
+      {},
+      "Account deleted successfully"
+    )
+  );
+});
+
+
+export { deleteAccount, updateProfile, changeCurrentPassword, logoutUser, getCurrentUser, loginUser, registerUser } 
