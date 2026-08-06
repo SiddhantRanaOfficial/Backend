@@ -225,5 +225,35 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
 
 });
 
+const updateProfile = asyncHandler(async (req, res) => {
+  const { fullname, email } = req.body;
 
-export { changeCurrentPassword, logoutUser, getCurrentUser, loginUser, registerUser } 
+  if (!fullname || !email) {
+    throw new ApiError(400, "All fields are required");
+  }
+
+  const user = await User.findByIdAndUpdate(
+    req.user._id,
+    {
+      $set: {
+        fullname,
+        email
+      }
+    },
+    {
+      new: true,
+      runValidators: true
+    }
+  ).select("-password -refreshToken");
+
+  res.status(200).json(
+    new ApiResponse(
+      200,
+      user,
+      "Profile updated successfully"
+    )
+  );
+});
+
+
+export { updateProfile, changeCurrentPassword, logoutUser, getCurrentUser, loginUser, registerUser } 
