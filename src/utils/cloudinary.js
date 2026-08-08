@@ -10,8 +10,8 @@ cloudinary.config({
 
 const uploadOnCloudinary = async (localFilePath) => {
   let response
+  if (!localFilePath) return null
   try {
-    if (!localFilePath) return null
     // upload the file on Cloudinary
     response = await cloudinary.uploader.upload(localFilePath, {
       resource_type: "auto"
@@ -31,7 +31,7 @@ const uploadOnCloudinary = async (localFilePath) => {
   }
   // file has been uploaded successfully (These 3 LOC are outside "try" to ensure "catch" executes only for cloudinary fails)
   console.log("File is uploaded on Cloudinary ", response.url)
-  fs.unlinkSync(localFilePath)
+  fs.unlinkSync(localFilePath) // We may use fs.unlink to make sure the server keeps handling the requests while asynchronous file operations are undergo.
   return response
 
   /* Using Finally block here, catch isn't used instead the exception is allowed to travell up to the error middleware"
@@ -53,6 +53,8 @@ const uploadOnCloudinary = async (localFilePath) => {
 
 
 export { uploadOnCloudinary }
+
+
 
 
 

@@ -19,10 +19,22 @@ const registerUser = asyncHandler(async (req, res) => {
   const { fullname, email, username, password } = req.body
   console.log("fullname:", fullname)
   if (
-    [fullname, email, username, password].some((field) =>
-      field?.trim() === "")
+    typeof fullname !== "string" ||
+    typeof email !== "string" ||
+    typeof username !== "string" ||
+    typeof password !== "string"
   ) {
-    throw new ApiError(400, "All fields are required")
+    throw new ApiError(400, "Invalid field type");
+  }
+
+  // Empty/whitespace validation
+  if (
+    !fullname.trim() ||
+    !email.trim() ||
+    !username.trim() ||
+    !password.trim()
+  ) {
+    throw new ApiError(400, "All fields are required");
   }
 
   const existedUser = await User.findOne({
@@ -32,9 +44,10 @@ const registerUser = asyncHandler(async (req, res) => {
   if (existedUser) {
     throw new ApiError(409, "User with email or username already exists")
   }
+  console.log(req.files)
 
-  const avatarLocalPath = req.files?.avatar[0]?.path
-  const coverImageLocalPath = req.files?.coverImage[0]?.path
+  const avatarLocalPath = req.files?.avatar?.[0]?.path
+  const coverImageLocalPath = req.files?.coverImage?.[0]?.path
   if (!avatarLocalPath) {
     throw new ApiError(400, "Avatar file is required")
   }
@@ -42,9 +55,9 @@ const registerUser = asyncHandler(async (req, res) => {
   const avatar = await uploadOnCloudinary(avatarLocalPath)
   const coverImage = await uploadOnCloudinary(coverImageLocalPath)
 
-  if (!avatar) {
-    throw new ApiError(400, "Bad Request\nAvatar file is required")
-  }
+  // if (!avatar) {
+  //   throw new ApiError(500, "Something went wrong while uploading the avatar\nPlease try again")
+  // }  // Redundant, since cloudinary utlity handles upload rejections. Loses the original error. It is never really reached unless my catch(error) in cloudinary utility returns null
 
   const user = await User.create({
     fullname,
@@ -86,7 +99,9 @@ const loginUser = asyncHandler(async (req, res) => {
   if ((!email && !username) || !password) {
     throw new ApiError(
       400,
-      "Username or email and password are required"
+      "Username or email and password are required",
+      [],
+      error.stack
     );
   }
 
