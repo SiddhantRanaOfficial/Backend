@@ -37,7 +37,11 @@ app.get("/", (req, res) => {
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500
   const message = err.message || "Internal server error"
-
+  console.error("========== ERROR ==========");
+  console.error("Message:", err.message);
+  console.error("Status Code:", err.statusCode);
+  console.error("Stack:", err.stack);
+  console.error("===========================");
   return res.status(statusCode).json({
     statusCode,
     data: err.data ?? null,
