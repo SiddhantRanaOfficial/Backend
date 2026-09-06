@@ -8,51 +8,39 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
+const removeLocalFile = async (localFilePath) => {
+  if (localFilePath && fs.existsSync(localFilePath)) {
+    try {
+      await fs.promises.unlink(localFilePath);
+    } catch (error) {
+      console.error(`Failed to clean up temp file ${localFilePath}:`, error);
+    }
+  }
+};
+
 const uploadOnCloudinary = async (localFilePath) => {
-  let response
-  if (!localFilePath) return null
+  if (!localFilePath) return null;
+
   try {
-    // upload the file on Cloudinary
-    response = await cloudinary.uploader.upload(localFilePath, {
+    const response = await cloudinary.uploader.upload(localFilePath, {
       resource_type: "auto"
-    })
+    });
+
+    await removeLocalFile(localFilePath);
+    return response;
   } catch (error) {
-    fs.unlinkSync(localFilePath) // Remove the locally saved temporary file as the upload got failed
-
-    // return null (Causes a 400 error even though it is a 500 error)
-
+    await removeLocalFile(localFilePath);
     throw new ApiError(
       500,
-      "Failed to upload the image to Cloudinary\nPlease Reupload",
+      "Failed to upload file to Cloudinary. Please try again.",
       [],
-      error.stack //Ensures the exact cause of error reaches the error middleware
-    )
-    // throw error (Again ensures instead of a custom message the exact error message reaches the error middleware)
+      error.stack
+    );
   }
-  // file has been uploaded successfully (These 3 LOC are outside "try" to ensure "catch" executes only for cloudinary fails)
-  console.log("File is uploaded on Cloudinary ", response.url)
-  fs.unlinkSync(localFilePath) // We may use fs.unlink to make sure the server keeps handling the requests while asynchronous file operations are undergo.
-  return response
+};
 
-  /* Using Finally block here, catch isn't used instead the exception is allowed to travell up to the error middleware"
-  const uploadOnCloudinary = async (localFilePath) => {
-    if (!localFilePath) return null;
+export { uploadOnCloudinary };
 
-    try {
-        return await cloudinary.uploader.upload(localFilePath, {
-            resource_type: "auto"
-        });
-    }
-    finally {
-        if (fs.existsSync(localFilePath)) {
-            fs.unlinkSync(localFilePath);
-        }
-    }
-}*/
-}
-
-
-export { uploadOnCloudinary }
 
 
 
