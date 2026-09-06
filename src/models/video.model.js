@@ -17,20 +17,20 @@ const videoSchema = new mongoose.Schema(
       type: String,
       required: true
     },
-    Description: {
+    description: {
       type: String,
       required: true
     },
     duration: {
-      type: Number, //Cloudinary
+      type: Number, //Cloudinary duration in seconds
       required: true
     },
-    Views: {
+    views: {
       type: Number,
       default: 0
     },
     isPublished: {
-      type: boolean,
+      type: Boolean,
       default: true
     },
     owner: {
