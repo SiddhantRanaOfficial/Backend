@@ -1,6 +1,6 @@
 /*
  ============================================================================
- [PHASE 2 FEATURE]: Playlist Controller Implementation
+ [PHASE 1 FEATURE]: Playlist Controller Implementation
  ============================================================================
  Handles creation, management, video curation, and retrieval of playlists.
 */
@@ -11,7 +11,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
-// [PHASE 2 FEATURE]: Create a new playlist
+// [PHASE 1 FEATURE]: Create a new playlist
 const createPlaylist = asyncHandler(async (req, res) => {
   const { name, description } = req.body;
 
@@ -31,7 +31,7 @@ const createPlaylist = asyncHandler(async (req, res) => {
     .json(new ApiResponse(201, playlist, "Playlist created successfully"));
 });
 
-// [PHASE 2 FEATURE]: Fetch all playlists owned by a user
+// [PHASE 1 FEATURE]: Fetch all playlists owned by a user
 const getUserPlaylists = asyncHandler(async (req, res) => {
   const { userId } = req.params;
 
@@ -46,7 +46,7 @@ const getUserPlaylists = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, playlists, "User playlists fetched successfully"));
 });
 
-// [PHASE 2 FEATURE]: Fetch playlist by ID with video details
+// [PHASE 1 FEATURE]: Fetch playlist by ID with video details
 const getPlaylistById = asyncHandler(async (req, res) => {
   const { playlistId } = req.params;
 
@@ -125,7 +125,7 @@ const getPlaylistById = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, playlist[0], "Playlist fetched successfully"));
 });
 
-// [PHASE 2 FEATURE]: Add a video to playlist (Owner only)
+// [PHASE 1 FEATURE]: Add a video to playlist (Owner only)
 const addVideoToPlaylist = asyncHandler(async (req, res) => {
   const { playlistId, videoId } = req.params;
 
@@ -157,7 +157,7 @@ const addVideoToPlaylist = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, playlist, "Video added to playlist successfully"));
 });
 
-// [PHASE 2 FEATURE]: Remove a video from playlist (Owner only)
+// [PHASE 1 FEATURE]: Remove a video from playlist (Owner only)
 const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
   const { playlistId, videoId } = req.params;
 
@@ -186,7 +186,7 @@ const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, playlist, "Video removed from playlist successfully"));
 });
 
-// [PHASE 2 FEATURE]: Delete playlist (Owner only)
+// [PHASE 1 FEATURE]: Delete playlist (Owner only)
 const deletePlaylist = asyncHandler(async (req, res) => {
   const { playlistId } = req.params;
 
@@ -211,7 +211,7 @@ const deletePlaylist = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "Playlist deleted successfully"));
 });
 
-// [PHASE 2 FEATURE]: Update playlist details (Owner only)
+// [PHASE 1 FEATURE]: Update playlist details (Owner only)
 const updatePlaylist = asyncHandler(async (req, res) => {
   const { playlistId } = req.params;
   const { name, description } = req.body;

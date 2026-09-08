@@ -1,6 +1,6 @@
 /*
  ============================================================================
- [PHASE 2 FEATURE]: Like Controller Implementation
+ [PHASE 1 FEATURE]: Like Controller Implementation
  ============================================================================
  Handles polymorphic liking functionality for videos, comments, and tweets.
 */
@@ -11,7 +11,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
-// [PHASE 2 FEATURE]: Toggle like on a video
+// [PHASE 1 FEATURE]: Toggle like on a video
 const toggleVideoLike = asyncHandler(async (req, res) => {
   const { videoId } = req.params;
 
@@ -40,7 +40,7 @@ const toggleVideoLike = asyncHandler(async (req, res) => {
   }
 });
 
-// [PHASE 2 FEATURE]: Toggle like on a comment
+// [PHASE 1 FEATURE]: Toggle like on a comment
 const toggleCommentLike = asyncHandler(async (req, res) => {
   const { commentId } = req.params;
 
@@ -69,7 +69,7 @@ const toggleCommentLike = asyncHandler(async (req, res) => {
   }
 });
 
-// [PHASE 2 FEATURE]: Toggle like on a tweet
+// [PHASE 1 FEATURE]: Toggle like on a tweet
 const toggleTweetLike = asyncHandler(async (req, res) => {
   const { tweetId } = req.params;
 
@@ -98,7 +98,7 @@ const toggleTweetLike = asyncHandler(async (req, res) => {
   }
 });
 
-// [PHASE 2 FEATURE]: Fetch all videos liked by the logged-in user
+// [PHASE 1 FEATURE]: Fetch all videos liked by the logged-in user
 const getLikedVideos = asyncHandler(async (req, res) => {
   const likedVideos = await Like.aggregate([
     {

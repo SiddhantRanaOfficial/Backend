@@ -1,8 +1,8 @@
 /*
  ============================================================================
- [PHASE 2 FEATURE]: Tweet Controller Implementation
+ [PHASE 1 FEATURE]: Tweet Controller Implementation
  ============================================================================
- Handles CRUD operations for community tweets/posts.
+ Handles CRUD operations for community text posts.
 */
 
 import mongoose, { isValidObjectId } from "mongoose";
@@ -11,7 +11,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
-// [PHASE 2 FEATURE]: Create a new tweet
+// [PHASE 1 FEATURE]: Create a new tweet
 const createTweet = asyncHandler(async (req, res) => {
   const { content } = req.body;
 
@@ -33,7 +33,7 @@ const createTweet = asyncHandler(async (req, res) => {
     .json(new ApiResponse(201, tweet, "Tweet created successfully"));
 });
 
-// [PHASE 2 FEATURE]: Fetch all tweets created by a specific user
+// [PHASE 1 FEATURE]: Fetch all tweets created by a specific user
 const getUserTweets = asyncHandler(async (req, res) => {
   const { userId } = req.params;
 
@@ -48,7 +48,7 @@ const getUserTweets = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, tweets, "User tweets fetched successfully"));
 });
 
-// [PHASE 2 FEATURE]: Update tweet content (Owner only)
+// [PHASE 1 FEATURE]: Update tweet content (Owner only)
 const updateTweet = asyncHandler(async (req, res) => {
   const { tweetId } = req.params;
   const { content } = req.body;
@@ -79,7 +79,7 @@ const updateTweet = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, tweet, "Tweet updated successfully"));
 });
 
-// [PHASE 2 FEATURE]: Delete a tweet (Owner only)
+// [PHASE 1 FEATURE]: Delete a tweet (Owner only)
 const deleteTweet = asyncHandler(async (req, res) => {
   const { tweetId } = req.params;
 

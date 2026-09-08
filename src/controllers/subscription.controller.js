@@ -1,6 +1,6 @@
 /*
  ============================================================================
- [PHASE 2 FEATURE]: Subscription Controller Implementation
+ [PHASE 1 FEATURE]: Subscription Controller Implementation
  ============================================================================
  Manages channel subscriptions, subscriber counts, and subbed channel lists.
 */
@@ -11,7 +11,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
-// [PHASE 2 FEATURE]: Toggle subscription status (Subscribe / Unsubscribe)
+// [PHASE 1 FEATURE]: Toggle subscription status (Subscribe / Unsubscribe)
 const toggleSubscription = asyncHandler(async (req, res) => {
   const { channelId } = req.params;
 
@@ -46,7 +46,7 @@ const toggleSubscription = asyncHandler(async (req, res) => {
   }
 });
 
-// [PHASE 2 FEATURE]: Fetch subscriber list of a channel
+// [PHASE 1 FEATURE]: Fetch subscriber list of a channel
 const getUserChannelSubscribers = asyncHandler(async (req, res) => {
   const { channelId } = req.params;
 
@@ -91,7 +91,7 @@ const getUserChannelSubscribers = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, subscribers, "Channel subscribers fetched successfully"));
 });
 
-// [PHASE 2 FEATURE]: Fetch list of channels a user has subscribed to
+// [PHASE 1 FEATURE]: Fetch list of channels a user has subscribed to
 const getSubscribedChannels = asyncHandler(async (req, res) => {
   const { subscriberId } = req.params;
 
