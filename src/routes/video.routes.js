@@ -1,16 +1,20 @@
 /*
  ============================================================================
- [PHASE 2 FEATURE]: Video Express Routes
+ [PHASE 1 & 2 FEATURE]: Video Express Routes
  ============================================================================
- Express router mapping video upload, playback, update, and search endpoints.
+ [PHASE 1 FEATURE]: Video publishing, playback, update, and search routes.
+ [PHASE 2 FEATURE]: Trending feed, playback progress (continue watching) routes.
 */
 
 import { Router } from "express";
 import {
   deleteVideo,
   getAllVideos,
+  getContinueWatching,
+  getTrendingVideos,
   getVideoById,
   publishAVideo,
+  savePlaybackProgress,
   togglePublishStatus,
   updateVideo
 } from "../controllers/video.controller.js";
@@ -21,6 +25,12 @@ const router = Router();
 
 router.use(verifyJWT);
 
+// [PHASE 2 FEATURE]: Special feeds & progress routes
+router.route("/trending").get(getTrendingVideos);
+router.route("/continue-watching").get(getContinueWatching);
+router.route("/progress/:videoId").post(savePlaybackProgress);
+
+// [PHASE 1 FEATURE]: Standard video routes
 router
   .route("/")
   .get(getAllVideos)
